@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sale Order form view -->
+    <record id="view_order_form_inherit_view_hidden_margin" model="ir.ui.view">
+        <field name="name">view.order.form.inherit.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='margin']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//label[@for='margin']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@class='text-nowrap']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_form_inherit_view_show_margin" model="ir.ui.view">
+        <field name="name">view.order.form.inherit.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='other_information']" position="inside">
+                <group>
+                    <group>
+                        <label for="margin" groups="base.group_user"/>
+                        <div class="text-nowrap" groups="base.group_user">
+                            <field name="margin" class="oe_inline"/>
+                            <field name="amount_untaxed" invisible="1"/>
+                            <span class="oe_inline" attrs="{'invisible': [('amount_untaxed', '=', 0)]}">
+                                (<field name="margin_percent" nolabel="1" class="oe_inline" widget="percentage"/>)
+                            </span>
+                        </div>
+                    </group>
+                    <group></group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
